@@ -3,6 +3,8 @@ LABEL maintainer="ccmite"
 WORKDIR /
 
 COPY start.sh /
+COPY teststart.sh /
+COPY test.sh /
 COPY prepare.sh /
 COPY consoletest.tar.gz /
 

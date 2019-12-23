@@ -13,8 +13,7 @@ if [ ! -e /var/spool/cron/crontabs/root ]
     chmod 600 /var/spool/cron/crontabs/root
     echo '# Min Hour Day Month DayOfWeek Command' > /var/spool/cron/crontabs/root
     echo '*/2 * * * * /var/spool/cron/test.sh > /var/spool/cron/log/test.log 2>&1' >> /var/spool/cron/crontabs/root
-    echo '#!/bin/sh' > /var/spool/cron/test.sh
-    echo 'echo "test run."' >> /var/spool/cron/test.sh
+    cp /test.sh /var/spool/cron/
     chmod 700 /var/spool/cron/test.sh
 fi
 
@@ -36,6 +35,12 @@ if [ ! -d /var/www/html/console ]
     tar -x -v -f /consoletest.tar.gz -C /var/www/html/
     chmod +x /var/www/html/console/*.sh
     sed -i "s/ccmite/${MC_INSTANCE_NAME}/g" /var/www/html/console/config/config.php
+fi
+
+if [ ! -e /opt/minecraft/${MC_INSTANCE_NAME}/teststart.sh ]
+    then
+    cp /teststart.sh /opt/minecraft/${MC_INSTANCE_NAME}/
+    chmod 777 /opt/minecraft/${MC_INSTANCE_NAME}/teststart.sh
 fi
 
 cd /opt/minecraft/${MC_INSTANCE_NAME}
