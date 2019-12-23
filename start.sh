@@ -33,7 +33,7 @@ fi
 
 if [ ! -d /var/www/html/console ]
     then
-    tar -x -v -f /console.tar.gz -C /var/www/html/
+    tar -x -v -f /consoletest.tar.gz -C /var/www/html/
     chmod +x /var/www/html/console/*.sh
     sed -i "s/ccmite/${MC_INSTANCE_NAME}/g" /var/www/html/console/config/config.php
 fi
