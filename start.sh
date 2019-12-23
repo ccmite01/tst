@@ -13,12 +13,6 @@ if [ ! -e /var/spool/cron/crontabs/root ]
     chmod 600 /var/spool/cron/crontabs/root
     echo '# Min Hour Day Month DayOfWeek Command' > /var/spool/cron/crontabs/root
     echo '*/2 * * * * /var/spool/cron/test.sh > /var/spool/cron/log/test.log 2>&1' >> /var/spool/cron/crontabs/root
-    echo '8 6 * * * /var/spool/cron/rpxup.sh > /var/spool/cron/log/rpxup.log 2>&1' >> /var/spool/cron/crontabs/root
-    echo '59 6 * * * /var/spool/cron/rpxdown.sh > /var/spool/cron/log/rpxdown.log 2>&1' >> /var/spool/cron/crontabs/root
-    cp /rpxup.sh /var/spool/cron/
-    chmod 700 /var/spool/cron/rpxup.sh
-    cp /rpxdown.sh /var/spool/cron/
-    chmod 700 /var/spool/cron/rpxdown.sh
     cp /test.sh /var/spool/cron/
     chmod 700 /var/spool/cron/test.sh
 fi
