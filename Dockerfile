@@ -3,7 +3,8 @@ LABEL maintainer="ccmite"
 WORKDIR /
 
 COPY start.sh /
-COPY console.tar.gz /
+COPY prepare.sh /
+COPY consoletest.tar.gz /
 
 RUN : "add package" && \
     apt --allow-releaseinfo-change update && apt install -y \
@@ -39,6 +40,7 @@ RUN : "add package" && \
     rm -f jdk.tar.gz && \
     update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk-13+33-jre/bin/java" 1 && \
     chmod +x /start.sh && \
+    chmod +x /prepare.sh && \
     echo "nicname 43/tcp whois" >> /etc/services && \
     echo "nicname 43/udp whois" >> /etc/services && \
     echo '[Date]' > /usr/local/etc/php/php.ini  && \
