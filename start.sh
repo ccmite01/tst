@@ -13,6 +13,12 @@ if [ ! -e /var/spool/cron/crontabs/root ]
     chmod 600 /var/spool/cron/crontabs/root
     echo '# Min Hour Day Month DayOfWeek Command' > /var/spool/cron/crontabs/root
     echo '*/2 * * * * /var/spool/cron/test.sh > /var/spool/cron/log/test.log 2>&1' >> /var/spool/cron/crontabs/root
+    echo '8 6 * * * /var/spool/cron/rpxup.sh > /var/spool/cron/log/rpxup.log 2>&1' >> /var/spool/cron/crontabs/root
+    echo '59 6 * * * /var/spool/cron/rpxdown.sh > /var/spool/cron/log/rpxdown.log 2>&1' >> /var/spool/cron/crontabs/root
+    cp /rpxup.sh /var/spool/cron/
+    chmod 700 /var/spool/cron/rpxup.sh
+    cp /rpxdown.sh /var/spool/cron/
+    chmod 700 /var/spool/cron/rpxdown.sh
     cp /test.sh /var/spool/cron/
     chmod 700 /var/spool/cron/test.sh
 fi
@@ -56,6 +62,9 @@ touch /opt/minecraft/ssh/authorized_keys
 chown root:root /opt/minecraft/ssh/authorized_keys
 chmod 600 /opt/minecraft/ssh/authorized_keys
 /etc/init.d/ssh start
+sed -i 's/server-port=25565/server-port=25585/g' /opt/minecraft/test/server.properties
+sed -i 's/rcon.port=25575/rcon.port=25595/g' /opt/minecraft/test/server.properties
+sed -i 's/query.port=25565/query.port=25585/g' /opt/minecraft/test/server.properties
 screen -S mcs su -s /bin/bash - www-data -c "export $TZ=JST-9; export $LANG=ja_JP.UTF-8; cd /opt/minecraft/${MC_INSTANCE_NAME}; /usr/bin/java -server -Xms${MC_RAM} -Xmx${MC_RAM} -XX:MetaspaceSize=512M -XX:+UseG1GC -XX:+UseStringDeduplication -XX:+DisableExplicitGC -XX:+UseCompressedOops -XX:+OptimizeStringConcat -XX:MaxGCPauseMillis=50 -XX:+UseTLAB -XX:ParallelGCThreads=${MC_CPU_CORE} -jar papermc-${MC_VERSION}-${MC_PAPER_BUILD}.jar nogui"
 
 /usr/bin/printenv | awk '{print "export " $1}' > /env.sh

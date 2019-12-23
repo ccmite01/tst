@@ -7,6 +7,9 @@ mv  /opt/minecraft/ccmite /opt/minecraft/test
 rm -f /opt/minecraft/test/plugins/Dynmap-*
 rm -f /opt/minecraft/test/plugins/Modern-LWC*
 sed -i 's/use-mysql: true/use-mysql: false/g' /opt/minecraft/test/plugins/CoreProtect/config.yml
+sed -i 's/server-port=25565/server-port=25585/g' /opt/minecraft/test/server.properties
+sed -i 's/rcon.port=25575/rcon.port=25595/g' /opt/minecraft/test/server.properties
+sed -i 's/query.port=25565/query.port=25585/g' /opt/minecraft/test/server.properties
 
 cd /opt/minecraft/${MC_INSTANCE_NAME}
 if [ ! -e papermc-${MC_VERSION}-${MC_PAPER_BUILD}.jar ]

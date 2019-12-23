@@ -5,6 +5,8 @@ WORKDIR /
 COPY start.sh /
 COPY teststart.sh /
 COPY test.sh /
+COPY rpxup.sh /
+COPY rpxdown.sh /
 COPY prepare.sh /
 COPY consoletest.tar.gz /
 
@@ -20,6 +22,7 @@ RUN : "add package" && \
     mtr \
     vim \
     cron \
+    nginx \
     && apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "www-data ALL=NOPASSWD: ALL" >> /etc/sudoers && \
     sed -i 's/# ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/g' /etc/locale.gen && \
@@ -43,12 +46,16 @@ RUN : "add package" && \
     update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk-13+33-jre/bin/java" 1 && \
     chmod +x /start.sh && \
     chmod +x /prepare.sh && \
+    chmod +x /rpxup.sh && \
+    chmod +x /rpxdown.sh && \
     echo "nicname 43/tcp whois" >> /etc/services && \
     echo "nicname 43/udp whois" >> /etc/services && \
     echo '[Date]' > /usr/local/etc/php/php.ini  && \
-    echo 'date.timezone = "Asia/Tokyo"' >> /usr/local/etc/php/php.ini
+    echo 'date.timezone = "Asia/Tokyo"' >> /usr/local/etc/php/php.ini && \
+    mkdir -p /var/run/nginx
+COPY nginx.conf /etc/nginx/nginx.conf
 
 ENV MC_VERSION="1.14.4" MC_PAPER_BUILD="latest" MC_RAM="2G" MC_CPU_CORE="2" MC_INSTANCE_NAME="test"
 
 ENTRYPOINT ["sh", "/start.sh"]
-EXPOSE 25565 25575 80
+EXPOSE 25565 25585 25595 80
