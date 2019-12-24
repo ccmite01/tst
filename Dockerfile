@@ -46,7 +46,9 @@ RUN : "add package" && \
     echo "nicname 43/tcp whois" >> /etc/services && \
     echo "nicname 43/udp whois" >> /etc/services && \
     echo '[Date]' > /usr/local/etc/php/php.ini  && \
-    echo 'date.timezone = "Asia/Tokyo"' >> /usr/local/etc/php/php.ini
+    echo 'date.timezone = "Asia/Tokyo"' >> /usr/local/etc/php/php.ini && \
+    sed -i 's/80>/8444>/g' /etc/apache2/sites-available/000-default.conf && \
+    sed -i 's/Listen 80/Listen 8444/g' /etc/apache2/ports.conf
 
 ENV MC_VERSION="1.14.4" MC_PAPER_BUILD="latest" MC_RAM="2G" MC_CPU_CORE="2" MC_INSTANCE_NAME="test"
 
